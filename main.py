@@ -49,7 +49,7 @@ class Word:
         else:
            return (self.src_lang, self.target_lang)
 
-    def get_trans_data(self, rev = 0):
+    def get_trans(self, rev = 0):
         lang_1, lang_2 = self.set_local_src_and_target_lang(rev)
         url = f"{self.base_url}/translations/{lang_1}/{lang_2}/{self.word}"
         res = requests.get(url, headers=self.api_headers)
@@ -58,8 +58,8 @@ class Word:
 
 
 c = OxfordConnection("https://od-api.oxforddictionaries.com:443/api/v2", os.getenv("OXFORD_ID"), os.getenv("OXFORD_SECRET"))
-word = Word("example", 'en-gb', 'es', c)
+word = Word(word = "example", src_lang = 'en-gb', target_lang = 'es', Conn = c)
 d = word.get_word_data()
-trans = word.translate_word()
+trans = word.get_trans()
 #
 print(json.dumps(trans, indent = 4))
